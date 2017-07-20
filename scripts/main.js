@@ -68,10 +68,20 @@ var begin_x, begin_y, end_x, end_y;
 
 function touch_event() {
     Smove_element.addEventListener('touchstart', function(event) {
+        if(event.cancelable) {
+            if(!event.defaultPrevented) {
+                event.preventDefault();
+            }
+        }
         begin_x = event.touches[0].pageX;
         begin_y = event.touches[0].pageY;
     });
     Smove_element.addEventListener('touchend', function(event) {
+        if(event.cancelable) {
+            if(!event.defaultPrevented) {
+                event.preventDefault();
+            }
+        }
         end_x = event.changedTouches[0].pageX;
         end_y = event.changedTouches[0].pageY;
         if (Math.abs(begin_x - end_x) > Math.abs(begin_y - end_y) && Math.abs(begin_x - end_x) >= 20) {
