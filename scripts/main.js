@@ -75,6 +75,16 @@ function touch_event() {
         }
         begin_x = event.touches[0].pageX;
         begin_y = event.touches[0].pageY;
+        if ((Smove.game_state === 1 || Smove.game_state === 2) 
+            && begin_x >= pause_x && begin_x <= pause_x + pause_size && begin_y >= pause_y && begin_y <= pause_y + pause_x) {
+            g_logic.pause();
+            g_views.draw_info();
+        } 
+        else if (Smove.game_state === 3 && begin_x >= restart_x && begin_x <= restart_x + restart_x + width 
+            && begin_y >= restart_y && begin_y <= restart_y + restart_height) {
+            g_logic.init();
+            g_views.draw_all();
+        }        
     });
     Smove_element.addEventListener('touchend', function(event) {
         if(event.cancelable) {
@@ -97,18 +107,6 @@ function touch_event() {
             else if (end_y > begin_y && Smove.white.y < n - 1)
                 Smove.white.y++;
             g_views.draw_white();
-        }
-        else {
-            if ((Smove.game_state === 1 || Smove.game_state === 2) 
-                && begin_x >= pause_x && begin_x <= pause_x + pause_size && begin_y >= pause_y && begin_y <= pause_y + pause_x) {
-                g_logic.pause();
-                g_views.draw_info();
-            } 
-            else if (Smove.game_state === 3 && begin_x >= restart_x && begin_x <= restart_x + restart_x + width 
-                && begin_y >= restart_y && begin_y <= restart_y + restart_height) {
-                g_logic.init();
-                g_views.draw_all();
-            }
         }
     });
 }
