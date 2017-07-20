@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Smove</title>
+    <link rel="stylesheet" type="text/css" href="smove.css">
+
+</head>
+<body onkeydown="keydown_operations(event)">
+    <div id="center" onclick="click_operations(event)">
+        <canvas id="canvas_center" width="600px" height="800px"></canvas>
+        <canvas id="canvas_bonus"></canvas>
+        <canvas id="canvas_white"></canvas>
+        <canvas id="canvas_blacks"></canvas>
+        <canvas id="canvas_button"></canvas>
+        <canvas id="canvas_info"></canvas>
+    </div>
+</body>
+</html>
+<script src="scripts/param.js" type="text/javascript" charset="utf-8" async defer></script>
+<script src="scripts/views.js" type="text/javascript" charset="utf-8" async defer></script>
+<script src="scripts/logic.js" type="text/javascript" charset="utf-8" async defer></script>
+<script src="scripts/main.js" type="text/javascript" charset="utf-8" async defer></script>

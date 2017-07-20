@@ -1,0 +1,46 @@
+@charset "utf-8"
+
+*{margin:0; padding:0; border:0;}
+
+body{
+    min-width: 600px;
+    margin:0; padding:0; border:0;
+}
+
+#center {
+    position: relative;
+    margin: 0 auto;
+    width: 600px;
+    height: 800px;
+}
+
+canvas#canvas_center {
+    position: absolute;
+    z-index: 0;
+}
+
+#canvas_bonus {
+    position: absolute;
+    z-index: 1;
+}
+
+#canvas_white {
+    position: absolute;
+    z-index: 2;
+}
+
+#canvas_blacks {
+    position: absolute;
+    z-index: 3;
+}
+
+#canvas_info {
+    position: absolute;
+    z-index: 4;
+}
+
+#canvas_button {
+    position: absolute;
+    z-index: 5;
+}
+
