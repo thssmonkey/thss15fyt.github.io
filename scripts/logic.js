@@ -109,6 +109,26 @@ function logic() {
                     Smove.blacks.push(this.create_black(board_x + (index + 0.5) * cell_size,
                         height + black_r + offset * cell_size, x_speed, y_speed));
             }
+            else if(direction === 2) {
+                if(x_speed >= 0)
+                    Smove.blacks.push(this.create_black(
+                        board_x - board_y - black_r + index * cell_size, 
+                        -black_r, x_speed, y_speed));
+                else
+                    Smove.blacks.push(this.create_black(
+                        board_x + (height - board_y) + black_r + index * cell_size, 
+                        height + black_r, x_speed, y_speed));
+            }
+            else {
+                if(x_speed >= 0)
+                    Smove.blacks.push(this.create_black(
+                        board_x + (height - board_y) + black_r + index * cell_size, 
+                        height + black_r, x_speed, y_speed));
+                else
+                    Smove.blacks.push(this.create_black(
+                        board_x + board_size + board_y + black_r + index * cell_size, 
+                        -black_r, x_speed, y_speed));
+            }
         },
 
         create_background: function() {
@@ -186,20 +206,42 @@ function blacks_create_update() {
         else
             num = 3;
         for (var i = 0; i < num; ++i) {
-            var random_direction = Math.random() >= 0.5 ? 0 : 1;
+            var direction;
+            var random_direction = Math.random();
+            if(random_direction < 0.4) direction = 0;
+            else if(random_direction >= 0.4 && random_direction < 0.8) direction = 1;
+            else if(random_direction >= 0.8 && random_direction < 0.9) direction = 2;
+            else direction = 3;
             var random_index;
-            do{
-                random_index = parseInt(Math.random() * n);
-            } while(random_index === n);
+            if(direction === 0 || direction === 1) {
+                do {
+                    random_index = parseInt(Math.random() * n);
+                } while(random_index === n);
+            }
+            else {
+                do {
+                    random_index = parseInt(Math.random() * n);
+                } while(random_index === n)
+                random_index = Math.random() >= 0.5 ? random_index : -random_index;
+            }
             var random_speed_direction = Math.random >= 0.5 ? 1 : -1;
             var speed_scale = Math.random <= level_fast_p[Smove.level] ? 2.5 : 1;
             var random_offset = Math.random >= 0.5 ? 0 : i;
-            if(random_direction === 0)
-                g_logic.create_single_black(random_direction, random_index, 
+            if(direction === 0)
+                g_logic.create_single_black(direction, random_index, 
                     level_speed[Smove.level] * speed_scale * random_speed_direction, 0, random_offset);
-            else if(random_direction === 1)
-                g_logic.create_single_black(random_direction, random_index, 
+            else if(direction === 1)
+                g_logic.create_single_black(direction, random_index, 
                     0, level_speed[Smove.level] * speed_scale * random_speed_direction, random_offset);
+            else if(direction === 2)
+                g_logic.create_single_black(direction, random_index, 
+                    level_speed[Smove.level] / 2 * speed_scale * random_speed_direction, 
+                    level_speed[Smove.level] / 2 * speed_scale * random_speed_direction, 0);
+            else
+                g_logic.create_single_black(direction, random_index, 
+                    level_speed[Smove.level] / 2 * speed_scale * random_speed_direction, 
+                    -level_speed[Smove.level] / 2 * speed_scale * random_speed_direction, 0);
+
         }
         Smove.blacks.time = level_black_interval[Smove.level] / interval;
     }
