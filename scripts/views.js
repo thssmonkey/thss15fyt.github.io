@@ -50,35 +50,37 @@ function views() {
                     background_color[Smove.level], background_color[Smove.level - 1]);
             }
             //board
-            //board-roundRect
-            ctx.beginPath();
-            ctx.lineWidth = line_width.toString();
-            ctx.strokeStyle = "white";
-            ctx.globalAlpha = 0.8;
-            ctx.moveTo(board_x + board_r, board_y);
-            ctx.lineTo(board_x + board_size - board_r, board_y);
-            ctx.arcTo(board_x + board_size, board_y, board_x + board_size, board_y + board_r, board_r);
-            ctx.lineTo(board_x + board_size, board_y + board_size - board_r);
-            ctx.arcTo(board_x + board_size, board_y + board_size, board_x + board_size - board_r, board_y + board_size, board_r);
-            ctx.lineTo(board_x + board_r, board_y + board_size);
-            ctx.arcTo(board_x, board_y + board_size, board_x, board_y + board_size - board_r, board_r);
-            ctx.lineTo(board_x, board_y + board_r);
-            ctx.arcTo(board_x, board_y, board_x + board_r, board_y, board_r);
-            ctx.stroke();
-            //board-lines
-            ctx.lineWidth = "3";
-            ctx.globalAlpha = 0.5;
-            for(i = 1; i <= n - 1; ++i) {
+            if(Smove.game_state !== 0) {
+                //board-roundRect
                 ctx.beginPath();
-                ctx.moveTo(board_x + line_space, board_y + i * cell_size);
-                ctx.lineTo(board_x + board_size - line_space, board_y + i * cell_size);
+                ctx.lineWidth = line_width.toString();
+                ctx.strokeStyle = "white";
+                ctx.globalAlpha = 0.8;
+                ctx.moveTo(board_x + board_r, board_y);
+                ctx.lineTo(board_x + board_size - board_r, board_y);
+                ctx.arcTo(board_x + board_size, board_y, board_x + board_size, board_y + board_r, board_r);
+                ctx.lineTo(board_x + board_size, board_y + board_size - board_r);
+                ctx.arcTo(board_x + board_size, board_y + board_size, board_x + board_size - board_r, board_y + board_size, board_r);
+                ctx.lineTo(board_x + board_r, board_y + board_size);
+                ctx.arcTo(board_x, board_y + board_size, board_x, board_y + board_size - board_r, board_r);
+                ctx.lineTo(board_x, board_y + board_r);
+                ctx.arcTo(board_x, board_y, board_x + board_r, board_y, board_r);
                 ctx.stroke();
-            }
-            for(i = 1; i <= n - 1; ++i) {
-                ctx.beginPath();
-                ctx.moveTo(board_x + i * cell_size, board_y + line_space);
-                ctx.lineTo(board_x + i * cell_size, board_y + board_size - line_space);
-                ctx.stroke();
+                //board-lines
+                ctx.lineWidth = "3";
+                ctx.globalAlpha = 0.5;
+                for(i = 1; i <= n - 1; ++i) {
+                    ctx.beginPath();
+                    ctx.moveTo(board_x + line_space, board_y + i * cell_size);
+                    ctx.lineTo(board_x + board_size - line_space, board_y + i * cell_size);
+                    ctx.stroke();
+                }
+                for(i = 1; i <= n - 1; ++i) {
+                    ctx.beginPath();
+                    ctx.moveTo(board_x + i * cell_size, board_y + line_space);
+                    ctx.lineTo(board_x + i * cell_size, board_y + board_size - line_space);
+                    ctx.stroke();
+                }
             }
             if(Smove.game_state === 3 && Smove.gameover_time > 0) {
                 ctx.restore();
@@ -89,7 +91,7 @@ function views() {
             var c = document.getElementById("canvas_white");
             var ctx = c.getContext("2d");
             ctx.clearRect(0, 0, width, height);
-            if(Smove.white === undefined)
+            if(Smove.white === undefined || Smove.game_state === 0)
                 return;
             if(Smove.game_state === 3 && Smove.gameover_time > 0) {
                 ctx.save();
@@ -117,9 +119,8 @@ function views() {
             var c = document.getElementById("canvas_bonus");
             var ctx = c.getContext("2d");
             ctx.clearRect(0, 0, width, height);
-            if(Smove.bonus === undefined)
-                return;
-            if(Smove.game_state === 3 || Smove.bonus.type === 0)
+            if(Smove.bonus === undefined || Smove.game_state === 0
+                || Smove.game_state === 3 || Smove.bonus.type === 0)
                 return;
             var color;
             if(Smove.bonus.type === 1)
@@ -166,8 +167,14 @@ function views() {
             var ctx = c.getContext("2d");
             ctx.clearRect(0, 0, width, height);
             ctx.globalAlpha = 1;
+            //start
+            if(Smove.game_state === 0) {
+                ctx.fillStyle = "white";
+                ctx.font = "100 90px Helvetica";
+                ctx.fillText("SMOVE", 140, 280);
+            }
             //score
-            if(Smove.game_state === 1 || Smove.game_state === 2){
+            else if(Smove.game_state === 1 || Smove.game_state === 2){
                 ctx.fillStyle = "white";
                 ctx.font = "100 40px Helvetica";
                 ctx.fillText("BEST : " + Smove.best_score.toString(), 30, 60);
@@ -181,6 +188,7 @@ function views() {
                     ctx.fillText("LEVEL " + Smove.level.toString(), 210, 250);
                 }
             }
+            //pause
             if(Smove.game_state === 2) {
                 ctx.fillStyle = background_color[Smove.level];
                 ctx.globalAlpha = 0.5;
@@ -190,6 +198,7 @@ function views() {
                 ctx.font = "100 110px Helvetica";
                 ctx.fillText("PAUSED", 90, 430);
             }
+            //gameover
             if(Smove.game_state === 3) {
                 ctx.fillStyle = background_color[Smove.level];
                 ctx.globalAlpha = 0.5;
@@ -209,12 +218,23 @@ function views() {
             var c = document.getElementById("canvas_button");
             var ctx = c.getContext("2d");
             ctx.clearRect(0, 0, width, height);
-            if(Smove.game_state === 1 || Smove.game_state === 2) {
+            //start
+            if(Smove.game_state === 0) {
+                draw_round_rect(ctx, start_x, start_y, 
+                    start_width, start_height, start_r, "white", 1);
+                ctx.globalAlpha = 1;
+                ctx.fillStyle = "#59B66F";
+                ctx.font = ("100 60px Helvetica");
+                ctx.fillText("START", 205, 585);
+            }
+            //pause
+            else if(Smove.game_state === 1 || Smove.game_state === 2) {
                 ctx.globalAlpha = 1;
                 ctx.fillStyle = "white";
                 ctx.fillRect(pause_x + 10, pause_y, 3, pause_size);
                 ctx.fillRect(pause_x + 30, pause_y, 3, pause_size);
             }
+            //restart
             else if(Smove.game_state === 3) {
                 draw_round_rect(ctx, restart_x, restart_y, 
                     restart_width, restart_height, restart_r, "white", 1);

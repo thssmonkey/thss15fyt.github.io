@@ -5,7 +5,7 @@ function logic() {
     return {
         //game about
         init: function() {
-            Smove.game_state = 1;
+            Smove.game_state = 0;
             Smove.level = 1;
             update_n(level_n[Smove.level]);
             Smove.score = 0;

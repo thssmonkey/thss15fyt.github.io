@@ -42,6 +42,11 @@ const restart_y = 530;
 const restart_width = 330;
 const restart_height = 85;
 const restart_r = 10;
+const start_x = 170;
+const start_y = 520;
+const start_width = 250;
+const start_height = 85;
+const start_r = 10;
 
 /* variables */
 var n;

@@ -7,7 +7,6 @@ Smove_element = document.getElementById("center");
     set_canvas_elements();
     touch_event();
     g_views.draw_all();
-    timeCount();
 })();
 
 function timeCount(){
@@ -35,7 +34,12 @@ function keydown_operations(event) {
             g_views.draw_white();            
             }
         if(code === 32) {
-            if(Smove.game_state === 1 || Smove.game_state === 2) {
+            if(Smove.game_state === 0) {
+                Smove.game_state = 1;
+                timeCount();
+                g_views.draw_all();
+            }
+            else if(Smove.game_state === 1 || Smove.game_state === 2) {
                 g_logic.pause();
                 g_views.draw_info();
             }
@@ -50,16 +54,24 @@ function keydown_operations(event) {
 function click_operations(event) {
     x = event.clientX - Smove_element.offsetLeft;
     y = event.clientY - Smove_element.offsetTop;
-    if((Smove.game_state === 1 || Smove.game_state === 2) 
+    if(Smove.game_state === 0
+        && x >= start_x && x <= start_x + start_width 
+        && y >= start_y && y <= start_y + start_height) {
+        Smove.game_state = 1;
+        timeCount();
+        g_views.draw_all();
+    }
+    else if((Smove.game_state === 1 || Smove.game_state === 2) 
         && x >= pause_x && x <= pause_x + pause_size
         && y >= pause_y && y <= pause_y + pause_x) {
         g_logic.pause();
         g_views.draw_info();
     }
     else if(Smove.game_state === 3
-        && x >= restart_x && x <= restart_x + restart_x + width 
+        && x >= restart_x && x <= restart_x + restart_width 
         && y >= restart_y && y <= restart_y + restart_height) {
         g_logic.init();
+        Smove.game_state = 1;
         g_views.draw_all();
     }
 }
@@ -75,14 +87,21 @@ function touch_event() {
         }
         begin_x = event.touches[0].pageX;
         begin_y = event.touches[0].pageY;
-        if ((Smove.game_state === 1 || Smove.game_state === 2) 
+        if (Smove.game_state === 0 && begin_x >= start_x && begin_x <= start_x + start_width 
+            && begin_y >= start_y && begin_y <= start_y + start_height) {
+            Smove.game_state = 1;
+            timeCount();
+            g_views.draw_all();
+        }    
+        else if ((Smove.game_state === 1 || Smove.game_state === 2) 
             && begin_x >= pause_x && begin_x <= pause_x + pause_size && begin_y >= pause_y && begin_y <= pause_y + pause_x) {
             g_logic.pause();
             g_views.draw_info();
         } 
-        else if (Smove.game_state === 3 && begin_x >= restart_x && begin_x <= restart_x + restart_x + width 
+        else if (Smove.game_state === 3 && begin_x >= restart_x && begin_x <= restart_x + restart_width 
             && begin_y >= restart_y && begin_y <= restart_y + restart_height) {
             g_logic.init();
+            Smove.game_state = 1;
             g_views.draw_all();
         }        
     });
