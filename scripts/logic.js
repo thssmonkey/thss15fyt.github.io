@@ -1,5 +1,5 @@
-g_logic = new logic;
-g_views = new views;
+var g_logic = new logic;
+var g_views = new views;
 
 function logic() {
     return {

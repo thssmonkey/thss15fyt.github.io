@@ -1,13 +1,12 @@
-g_views = new views;
-g_logic = new logic;
-Smove_element = document.getElementById("center");
+var g_views = new views;
+var Smove_element = document.getElementById("center");
 
-(function init() {
+function init() {
     g_logic.init();
     set_canvas_elements();
     touch_event();
     g_views.draw_all();
-})();
+};
 
 function timeCount(){
     g_logic.update();
