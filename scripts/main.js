@@ -1,8 +1,11 @@
-var g_logic = new logic;
-var g_views = new views;
-var Smove_element = document.getElementById("center");
+var g_logic;
+var g_views;
+var Smove_element;
 
 function init() {
+    g_logic = new logic;
+    g_views = new views;
+    Smove_element = document.getElementById("center");
     g_logic.init();
     set_canvas_elements();
     touch_event();
