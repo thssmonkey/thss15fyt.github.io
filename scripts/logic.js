@@ -1,10 +1,12 @@
-var g_logic = new logic;
-var g_views = new views;
+g_logic = undefined;
+g_views = undefined;
 
 function logic() {
     return {
         //game about
         init: function() {
+            g_logic = new logic;
+            g_views = new views;
             Smove.game_state = 0;
             Smove.level = 1;
             update_n(level_n[Smove.level]);

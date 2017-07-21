@@ -1,6 +1,6 @@
-var g_logic;
-var g_views;
-var Smove_element;
+var g_logic = undefined;
+var g_views = undefined;
+var Smove_element = undefined;
 
 function init() {
     g_logic = new logic;
