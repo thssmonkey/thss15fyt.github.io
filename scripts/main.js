@@ -85,8 +85,8 @@ function touch_event() {
                 event.preventDefault();
             }
         }
-        begin_x = event.touches[0].pageX;
-        begin_y = event.touches[0].pageY;
+        begin_x = event.touches[0].pageX - Smove_element.offsetLeft;
+        begin_y = event.touches[0].pageY - Smove_element.offsetTop;
         if (Smove.game_state === 0 && begin_x >= start_x && begin_x <= start_x + start_width 
             && begin_y >= start_y && begin_y <= start_y + start_height) {
             Smove.game_state = 1;
@@ -94,7 +94,8 @@ function touch_event() {
             g_views.draw_all();
         }    
         else if ((Smove.game_state === 1 || Smove.game_state === 2) 
-            && begin_x >= pause_x && begin_x <= pause_x + pause_size && begin_y >= pause_y && begin_y <= pause_y + pause_x) {
+            && begin_x >= pause_x && begin_x <= pause_x + pause_size 
+            && begin_y >= pause_y && begin_y <= pause_y + pause_size) {
             g_logic.pause();
             g_views.draw_info();
         } 
@@ -113,8 +114,8 @@ function touch_event() {
         }
         if(Smove.game_state !== 1)
             return;
-        end_x = event.changedTouches[0].pageX;
-        end_y = event.changedTouches[0].pageY;
+        end_x = event.changedTouches[0].pageX - Smove_element.offsetLeft;
+        end_y = event.changedTouches[0].pageY - Smove_element.offsetTop;
         if (Math.abs(begin_x - end_x) > Math.abs(begin_y - end_y) && Math.abs(begin_x - end_x) >= 20) {
             if (end_x > begin_x && Smove.white.x < n - 1)
                 Smove.white.x++;
