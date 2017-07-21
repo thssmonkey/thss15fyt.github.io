@@ -111,6 +111,8 @@ function touch_event() {
                 event.preventDefault();
             }
         }
+        if(Smove.game_state !== 1)
+            return;
         end_x = event.changedTouches[0].pageX;
         end_y = event.changedTouches[0].pageY;
         if (Math.abs(begin_x - end_x) > Math.abs(begin_y - end_y) && Math.abs(begin_x - end_x) >= 20) {
