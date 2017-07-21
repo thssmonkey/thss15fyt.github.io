@@ -48,6 +48,7 @@ function keydown_operations(event) {
             }
             else if(Smove.game_state === 3) {
                 g_logic.init();
+                Smove.game_state = 1;
                 g_views.draw_all();
             }
         }

@@ -208,9 +208,12 @@ function blacks_create_update() {
         for (var i = 0; i < num; ++i) {
             var direction;
             var random_direction = Math.random();
-            if(random_direction < 0.4) direction = 0;
-            else if(random_direction >= 0.4 && random_direction < 0.8) direction = 1;
-            else if(random_direction >= 0.8 && random_direction < 0.9) direction = 2;
+            if(random_direction < level_type_p[Smove.level][0]) 
+                direction = 0;
+            else if(random_direction >= level_type_p[Smove.level][0] && random_direction < level_type_p[Smove.level][1]) 
+                direction = 1;
+            else if(random_direction >= level_type_p[Smove.level][1] && random_direction < level_type_p[Smove.level][2]) 
+                direction = 2;
             else direction = 3;
             var random_index;
             if(direction === 0 || direction === 1) {
