@@ -1,3 +1,4 @@
+var g_logic = new logic;
 var g_views = new views;
 var Smove_element = document.getElementById("center");
 
