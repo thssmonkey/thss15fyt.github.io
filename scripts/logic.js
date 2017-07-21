@@ -271,7 +271,8 @@ function blacks_move_update() {
             flag = true;
             var white_center = get_cell_center(Smove.white);
             if(Math.pow((white_center.x_coordinate - black.x_pos), 2) + 
-                Math.pow((white_center.y_coordinate - black.y_pos), 2) < Math.pow((white_r + black_r), 2)) {
+                Math.pow((white_center.y_coordinate - black.y_pos), 2) < 
+                Math.pow((white_r + black_r - 0.1 * white_r), 2)) {
                 g_logic.game_over();
             }
         }
